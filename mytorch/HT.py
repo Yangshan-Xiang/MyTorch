@@ -176,3 +176,4 @@ def train_ht():
         if epoch % 10 == 0:
             print(f'epoch: {epoch}/{epochs}, loss: {loss:.4f}, acc: {acc:.2f}%')
     curves(epochs, losses, accs)
+    return losses, accs

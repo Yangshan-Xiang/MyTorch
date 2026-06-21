@@ -61,15 +61,15 @@ def curves(epochs, losses, accs):
 
     ax1 = axes[0]
     ax1.plot(range(1, epochs + 1), losses, color='k', label='Loss')
-    ax1.set_xlabel('Epoch')
-    ax1.set_ylabel('Loss')
+    ax1.set_xlabel('Epoch', fontsize=15)
+    ax1.set_ylabel('Loss', fontsize=15)
     ax1.tick_params(axis='y')
     ax1.set_title(f'Loss Curves')
 
     ax2 = axes[1]
     ax2.plot(range(1, epochs + 1), accs, color='k', label='Accuracy')
-    ax2.set_xlabel('Epoch')
-    ax2.set_ylabel('Accuracy (%)')
+    ax2.set_xlabel('Epoch', fontsize=15)
+    ax2.set_ylabel('Accuracy (%)', fontsize=15)
     ax2.tick_params(axis='y')
     ax2.set_title(f'Accuracy Curves')
 
