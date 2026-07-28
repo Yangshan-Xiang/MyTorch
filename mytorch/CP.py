@@ -78,7 +78,7 @@ def make_dataset(task: str, pts: int):
     ys = torch.tensor(ys_list, dtype=torch.long)
     return xs, ys, xs_list, ys_list
 
-def plot_boundary(model, xs_list, ys_list, device, title):
+def plot_boundary(model, xs_list, ys_list, device):
     grid_size = 200
     x1 = np.linspace(-1.2, 1.2, grid_size)
     x2 = np.linspace(-1.2, 1.2, grid_size)
@@ -91,16 +91,16 @@ def plot_boundary(model, xs_list, ys_list, device, title):
         pred = model(grid_tensor).argmax(dim=1).cpu().numpy().reshape(grid_size, grid_size)
 
     fig, ax = plt.subplots(figsize=(5, 5))
-    ax.contourf(xx1, xx2, pred, levels=[-0.5, 0.5, 1.5], colors=['deepskyblue', 'lightcoral'])
+    ax.contourf(xx1, xx2, pred, levels=[-0.5, 0.5, 1.5], colors=['0.95', '0.55'])
+    ax.contour(xx1, xx2, pred, levels=[0.5], colors='black', linewidths=1.2)
 
     xs0 = [x for x, y in zip(xs_list, ys_list) if y == 0]
     xs1 = [x for x, y in zip(xs_list, ys_list) if y == 1]
-    ax.scatter([x[0] for x in xs0], [x[1] for x in xs0], color='blue', s=10, label='Class 0')
-    ax.scatter([x[0] for x in xs1], [x[1] for x in xs1], color='red', s=10, label='Class 1')
+    ax.scatter([x[0] for x in xs0], [x[1] for x in xs0], facecolors='white', edgecolors='black', marker='o', s=15, linewidths=0.7, label='Class 0')
+    ax.scatter([x[0] for x in xs1], [x[1] for x in xs1], facecolors='black', edgecolors='black', marker='o', s=15, linewidths=0.7, label='Class 1')
 
-    ax.set_xlabel('x1')
-    ax.set_ylabel('x2')
-    ax.set_title(title)
+    ax.set_xlabel('x1', fontsize=15)
+    ax.set_ylabel('x2', fontsize=15)
     ax.legend(bbox_to_anchor=(1, 1))
     ax.axis('equal')
     plt.tight_layout()
@@ -163,5 +163,5 @@ def train_cp(task: str = 'circle', epochs: int = 100, dataset=None, plot: bool =
 
     if plot:
         curves(epochs, losses, accs)
-        plot_boundary(model, xs_list, ys_list, device, f'CP Model Decision Boundary ({task})')
+        plot_boundary(model, xs_list, ys_list, device)
     return losses, accs, model, xs_list, ys_list
